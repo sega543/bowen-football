@@ -17,12 +17,12 @@
         </div>
     </div>
     <script>
-       document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+document.getElementById('regForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const newPlayer = {
-        name: document.getElementById('regName').value,
-        pos: document.getElementById('regPos').value,
-        tem: document.getElementById('regtem').value
+        name: document.getElementById('name').value,
+        pos: document.getElementById('pos').value,
+        team: document.getElementById('tem').value
     };
 
     const res = await fetch('http://localhost:3000/api/register', {
@@ -31,7 +31,10 @@
         body: JSON.stringify(newPlayer)
     });
 
-    if(res.ok) alert("Submitted to Admin!");
+    if(res.ok) {
+        alert("Submitted to Admin for Approval!");
+        e.target.reset();
+    }
 });
     </script>
 </body>

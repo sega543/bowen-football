@@ -1,220 +1,98 @@
 :root {
-  --pl-purple: #37003c;
-  --pl-neon: #00ff85;
-  --pl-bg: #1b001d;
-  --white: #ffffff;
+    --pl-neon: #00ff87; /* Premier League inspired Green */
+    --pl-purple: #3d195a;
+    --dark-bg: #111;
+    --card-bg: #1a1a1a;
+    --text: #fff;
 }
 
 body {
-  margin: 0; font-family: sans-serif;
-  background-color: var(--pl-bg); color: var(--white);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text);
+    margin: 0;
 }
 
 header {
-  background: var(--pl-purple); padding: 1rem 5%;
-  display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 3px solid var(--pl-neon);
-}
-
-nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: bold; }
-
-.container { padding: 2rem 5%; }
-
-/* The "Hub" Grid */
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-
-.card { background: var(--pl-purple); padding: 20px; border-radius: 8px; }
-
-/* Match Row Styling from fixures.png */
-.match-row {
-  display: flex; justify-content: space-between; align-items: center;
-  background: rgba(255,255,255,0.05); margin: 10px 0; padding: 15px;
-}
-
-.score-box { background: var(--pl-bg); padding: 5px 15px; border-radius: 4px; font-weight: bold; }
-
-
-
-
-
-
-/* Player List Styling */
-
-.filter-bar {
     background: var(--pl-purple);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: var(--card-bg);
     padding: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    gap: 15px;
-    border-radius: 4px;
-}
-
-#playerSearch {
-    flex-grow: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-}
-
-.player-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: var(--pl-purple);
-}
-
-.player-table th {
-    text-align: left;
-    padding: 15px;
-    border-bottom: 2px solid var(--pl-bg);
-    color: var(--pl-neon);
-}
-
-.player-table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-.player-cell {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.player-cell img {
-    border-radius: 50%;
-    background: #eee;
-}
-
-
-
-
-/* Match Page Specific Styles */
-
-
-.match-day-group {
-    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 
 .match-row {
-    display: grid;
-    grid-template-columns: 1fr 100px 1fr 60px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    background: var(--pl-purple);
-    margin: 5px 0;
     padding: 15px;
-    border-radius: 4px;
-    transition: background 0.3s;
-    text-align: center;
+    border-bottom: 1px solid #333;
 }
-
-.match-row:hover {
-    background: rgba(255, 255, 255, 0.1);
-    cursor: pointer;
-}
-
-.team-home { text-align: right; }
-.team-away { text-align: left; }
 
 .score-box {
-    background: var(--pl-bg);
-    color: var(--white);
+    background: var(--pl-neon);
+    color: #000;
     padding: 5px 15px;
+    font-weight: bold;
     border-radius: 4px;
-    font-weight: bold;
-    border: 1px solid var(--pl-neon);
-    display: inline-block;
-    min-width: 40px;
 }
 
-.match-status {
-    color: var(--pl-neon);
-    font-weight: bold;
-    font-size: 0.8rem;
-}
-
-@media (max-width: 600px) {
-    .match-row {
-        grid-template-columns: 1fr 60px 1fr;
-    }
-    .match-status { display: none; }
-}
-
-
-
-
-/* Table Specific Styling */
-.table-container {
-    background: var(--pl-purple);
-    border-radius: 8px;
-    overflow: hidden;
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
 }
 
-.league-table {
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.admin-section {
+    border: 1px solid var(--pl-neon);
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+}
+
+button {
+    background: var(--pl-neon);
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+button.approve { background: #28a745; color: white; margin-right: 5px; }
+button.reject { background: #dc3545; color: white; }
+
+input, select {
     width: 100%;
-    border-collapse: collapse;
-    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
 }
-
-.league-table th {
-    background: rgba(0, 0, 0, 0.2);
-    color: var(--pl-neon);
-    padding: 15px;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-}
-
-.league-table td {
-    padding: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.text-left { text-align: left; }
-
-.pts-cell {
-    font-weight: bold;
-    color: var(--white);
-    background: rgba(255, 255, 255, 0.03);
-}
-
-.form-circle {
-    display: inline-block;
-    width: 22px;
-    height: 22px;
-    line-height: 22px;
-    border-radius: 50%;
-    font-size: 0.7rem;
-    margin: 0 2px;
-    color: #1b001d;
-    font-weight: bold;
-}
-
-
-
-:root {
-  --pl-purple: #37003c;
-  --pl-neon: #00ff85;
-  --pl-bg: #1b001d;
-  --white: #ffffff;
-}
-
-body { margin: 0; font-family: sans-serif; background-color: var(--pl-bg); color: var(--white); }
-header { background: var(--pl-purple); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--pl-neon); }
-nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: bold; }
-.container { padding: 2rem 5%; }
-.card { background: var(--pl-purple); padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-.match-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); margin: 10px 0; padding: 15px; border-radius: 4px; }
-.score-box { background: var(--pl-bg); color: var(--white); padding: 5px 15px; border-radius: 4px; border: 1px solid var(--pl-neon); font-weight: bold; }
-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-th { color: var(--pl-neon); text-align: left; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-
-
-
-
-
-@media (max-width: 600px) {
-    .hide-mobile { display: none; }
-}
-
-
