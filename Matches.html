@@ -24,37 +24,21 @@
     <script src="index.js"></script>
 
     <script>
-async function loadLeagueContent() {
-    const res = await fetch('/api/data');
+async function loadMatches() {
+    const res = await fetch('http://localhost:3000/api/data');
     const data = await res.json();
+    const container = document.getElementById('match-schedule');
     
-    // Auto-fill Table if it exists on page
-    const tableBody = document.getElementById('table-body');
-    if(tableBody) {
-        tableBody.innerHTML = data.standings.map((s, i) => `
-            <tr><td>${i+1}</td><td>${s.team}</td><td>${s.pts}</td><td>${s.form}</td></tr>
-        `).join('');
-    }
-
-    // Auto-fill Matches if it exists on page
-    const matchContainer = document.getElementById('match-schedule');
-    if(matchContainer) {
-        matchContainer.innerHTML = data.matches.map(m => `
+    data.matches.forEach(m => {
+        container.innerHTML += `
             <div class="match-row">
-                <span>${m.home}</span> <strong>${m.score}</strong> <span>${m.away}</span>
-            </div>
-        `).join('');
-    }
-
-    // Auto-fill Players if it exists on page
-    const playerBody = document.getElementById('player-body');
-    if(playerBody) {
-        playerBody.innerHTML = data.players.map(p => `
-            <tr><td>${p.name}</td><td>${p.pos}</td><td>${p.col}</td><td>${p.stats}</td></tr>
-        `).join('');
-    }
+                <div class="team-home">${m.home}</div>
+                <div class="score-box">${m.score}</div>
+                <div class="team-away">${m.away}</div>
+            </div>`;
+    });
 }
-loadLeagueContent();
+loadMatches();
     </script>
 </body>
 </html>

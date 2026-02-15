@@ -12,6 +12,7 @@
             <a href="Tables.html">Tables</a>
             <a href="player.html">Players</a>
             <a href="register.html">Register</a>
+            <a href="admin.html">Register</a>          
         </nav>
     </header>
     <div class="container">
@@ -27,16 +28,22 @@
         </div>
     </div>
     <script>
-        async function loadHome() {
-            const res = await fetch('/api/data');
-            const data = await res.json();
-            document.getElementById('mini-table').innerHTML = data.standings.slice(0, 3).map(s => 
-                `<p>${s.team} - ${s.pts} pts</p>`).join('');
-            const m = data.matches[0];
-            document.getElementById('latest-match').innerHTML = `
-                <div class="match-row"><span>${m.home}</span> <span class="score-box">${m.score}</span> <span>${m.away}</span></div>`;
-        }
-        loadHome();
+async function loadHome() {
+    const res = await fetch('http://localhost:3000/api/data');
+    const data = await res.json();
+    
+    // Table Snapshot
+    const tableBody = document.getElementById('mini-table');
+    data.standings.slice(0, 3).forEach(s => {
+        tableBody.innerHTML += `<p>${s.pos}. ${s.team} - ${s.pts}pts</p>`;
+    });
+
+    // Latest Result
+    const m = data.matches[0];
+    document.getElementById('latest-match').innerHTML = `
+        <div class="match-row"><span>${m.home}</span> <strong>${m.score}</strong> <span>${m.away}</span></div>`;
+}
+loadHome();
     </script>
 </body>
 </html>

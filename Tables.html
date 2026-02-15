@@ -39,38 +39,22 @@
 
     <script src="index.js"></script>
     <script>
-
-      async function loadLeagueContent() {
-    const res = await fetch('/api/data');
+async function loadHome() {
+    const res = await fetch('http://localhost:3000/api/data');
     const data = await res.json();
     
-    // Auto-fill Table if it exists on page
-    const tableBody = document.getElementById('table-body');
-    if(tableBody) {
-        tableBody.innerHTML = data.standings.map((s, i) => `
-            <tr><td>${i+1}</td><td>${s.team}</td><td>${s.pts}</td><td>${s.form}</td></tr>
-        `).join('');
-    }
+    // Table Snapshot
+    const tableBody = document.getElementById('mini-table');
+    data.standings.slice(0, 3).forEach(s => {
+        tableBody.innerHTML += `<p>${s.pos}. ${s.team} - ${s.pts}pts</p>`;
+    });
 
-    // Auto-fill Matches if it exists on page
-    const matchContainer = document.getElementById('match-schedule');
-    if(matchContainer) {
-        matchContainer.innerHTML = data.matches.map(m => `
-            <div class="match-row">
-                <span>${m.home}</span> <strong>${m.score}</strong> <span>${m.away}</span>
-            </div>
-        `).join('');
-    }
-
-    // Auto-fill Players if it exists on page
-    const playerBody = document.getElementById('player-body');
-    if(playerBody) {
-        playerBody.innerHTML = data.players.map(p => `
-            <tr><td>${p.name}</td><td>${p.pos}</td><td>${p.col}</td><td>${p.stats}</td></tr>
-        `).join('');
-    }
+    // Latest Result
+    const m = data.matches[0];
+    document.getElementById('latest-match').innerHTML = `
+        <div class="match-row"><span>${m.home}</span> <strong>${m.score}</strong> <span>${m.away}</span></div>`;
 }
-loadLeagueContent();
+loadHome();
     </script>
 </body>
 </html>

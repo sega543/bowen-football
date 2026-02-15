@@ -17,12 +17,22 @@
         </div>
     </div>
     <script>
-        document.getElementById('regForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const body = { name: document.getElementById('name').value, pos: document.getElementById('pos').value, tem: document.getElementById('tem').value };
-            await fetch('/api/register', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
-            alert("Registration Submitted!");
-        };
+       document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const newPlayer = {
+        name: document.getElementById('regName').value,
+        pos: document.getElementById('regPos').value,
+        tem: document.getElementById('regtem').value
+    };
+
+    const res = await fetch('http://localhost:3000/api/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(newPlayer)
+    });
+
+    if(res.ok) alert("Submitted to Admin!");
+});
     </script>
 </body>
 </html>
