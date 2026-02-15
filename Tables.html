@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>League Table - Bowen Fans League</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Bowen Football</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="Matches.html">Matches</a>
+            <a href="player.html">Players</a>
+        </nav>
+    </header>
+
+
+    <div class="container">
+        <h2 class="page-title">League Standings</h2>
+        
+        <div class="table-container">
+            <table class="league-table">
+                <thead>
+                    <tr>
+                        <th>Pos</th>
+                        <th class="text-left">Club</th>
+                        <th>Pl</th>
+                        <th>GD</th>
+                        <th>Pts</th>
+                        <th class="hide-mobile">Form</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+    <script>
+
+      async function loadLeagueContent() {
+    const res = await fetch('/api/data');
+    const data = await res.json();
+    
+    // Auto-fill Table if it exists on page
+    const tableBody = document.getElementById('table-body');
+    if(tableBody) {
+        tableBody.innerHTML = data.standings.map((s, i) => `
+            <tr><td>${i+1}</td><td>${s.team}</td><td>${s.pts}</td><td>${s.form}</td></tr>
+        `).join('');
+    }
+
+    // Auto-fill Matches if it exists on page
+    const matchContainer = document.getElementById('match-schedule');
+    if(matchContainer) {
+        matchContainer.innerHTML = data.matches.map(m => `
+            <div class="match-row">
+                <span>${m.home}</span> <strong>${m.score}</strong> <span>${m.away}</span>
+            </div>
+        `).join('');
+    }
+
+    // Auto-fill Players if it exists on page
+    const playerBody = document.getElementById('player-body');
+    if(playerBody) {
+        playerBody.innerHTML = data.players.map(p => `
+            <tr><td>${p.name}</td><td>${p.pos}</td><td>${p.col}</td><td>${p.stats}</td></tr>
+        `).join('');
+    }
+}
+loadLeagueContent();
+    </script>
+</body>
+</html>

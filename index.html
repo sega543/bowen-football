@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Bowen Football</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="Matches.html">Matches</a>
+            <a href="Tables.html">Tables</a>
+            <a href="player.html">Players</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="card">
+                <h3>League Table</h3>
+                <div id="mini-table">Loading...</div>
+            </div>
+            <div class="card">
+                <h3>Latest Result</h3>
+                <div id="latest-match">Loading...</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        async function loadHome() {
+            const res = await fetch('/api/data');
+            const data = await res.json();
+            document.getElementById('mini-table').innerHTML = data.standings.slice(0, 3).map(s => 
+                `<p>${s.team} - ${s.pts} pts</p>`).join('');
+            const m = data.matches[0];
+            document.getElementById('latest-match').innerHTML = `
+                <div class="match-row"><span>${m.home}</span> <span class="score-box">${m.score}</span> <span>${m.away}</span></div>`;
+        }
+        loadHome();
+    </script>
+</body>
+</html>

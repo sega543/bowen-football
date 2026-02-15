@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><link rel="stylesheet" href="styles.css"></head>
+<body>
+    <header><h1>Bowen Football</h1><nav><a href="index.html">Home</a></nav></header>
+    <div class="container">
+        <div class="card" style="max-width: 400px; margin: auto;">
+            <h2>Register Player</h2>
+            <form id="regForm">
+                <input type="text" id="name" placeholder="Full Name" required style="width: 100%; margin-bottom: 10px; padding: 10px;">
+                <select id="pos" style="width: 100%; margin-bottom: 10px; padding: 10px;">
+                    <option>Forward</option><option>Midfielder</option><option>Defender</option><option>Goalkeeper</option>
+                </select>
+                <input type="text" id="tem" placeholder="Team Name" required style="width: 100%; margin-bottom: 20px; padding: 10px;">
+                <button type="submit" style="width: 100%; padding: 15px; background: var(--pl-neon); font-weight: bold; cursor: pointer;">SUBMIT</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('regForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const body = { name: document.getElementById('name').value, pos: document.getElementById('pos').value, tem: document.getElementById('tem').value };
+            await fetch('/api/register', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
+            alert("Registration Submitted!");
+        };
+    </script>
+</body>
+</html>
