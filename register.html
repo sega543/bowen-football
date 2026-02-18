@@ -1,0 +1,61 @@
+<div class="registration-card">
+    <div class="form-header">
+        <h1>PLAYER REGISTRATION</h1>
+        <p>Your details will be sent to the admin for match rating.</p>
+    </div>
+
+    <div class="form-body">
+        <label>FULL NAME</label>
+        <input type="text" id="pName" placeholder="Enter Full Name">
+
+        <label>DEPARTMENT</label>
+        <input type="text" id="pDept" placeholder="e.g. Computer Science">
+
+        <label>POSITION</label>
+        <select id="pPos">
+            <option value="GK">Goalkeeper (GK)</option>
+            <option value="DEF">Defender (DEF)</option>
+            <option value="MID">Midfielder (MID)</option>
+            <option value="ST">Striker (ST)</option>
+        </select>
+
+        <button onclick="saveRegistration()" class="submit-btn">REGISTER PLAYER</button>
+    </div>
+</div>
+
+<style>
+    body { background: #0a1118; color: white; font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; }
+    .registration-card { background: #141d26; padding: 30px; border-radius: 8px; width: 400px; border-top: 4px solid #ff1e1e; }
+    .form-header h1 { font-size: 1.5rem; margin-bottom: 5px; }
+    .form-header p { color: #8a9199; font-size: 0.8rem; margin-bottom: 20px; }
+    label { display: block; font-size: 11px; color: #ff1e1e; margin-bottom: 5px; font-weight: bold; }
+    input, select { width: 100%; padding: 12px; margin-bottom: 20px; background: #1c2732; border: 1px solid #2d3844; color: white; border-radius: 4px; }
+    .submit-btn { width: 100%; padding: 15px; background: #ff1e1e; color: white; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; }
+    .submit-btn:hover { background: #cc1818; }
+</style>
+
+<script>
+    function saveRegistration() {
+        const name = document.getElementById('pName').value;
+        const dept = document.getElementById('pDept').value;
+        const pos = document.getElementById('pPos').value;
+
+        if (!name || !dept) {
+            alert("Fill all fields, boss!");
+            return;
+        }
+
+        // Get existing players from local storage
+        const players = JSON.parse(localStorage.getItem('bowen_players')) || [];
+        
+        // Add new player
+        players.push({ name, dept, pos });
+
+        // Save back to storage
+        localStorage.setItem('bowen_players', JSON.stringify(players));
+
+        alert(name + " registered! wait for admin to approve.");
+        document.getElementById('pName').value = "";
+        document.getElementById('pDept').value = "";
+    }
+</script>
