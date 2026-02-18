@@ -1,49 +1,194 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOWEN FOOTBALL | Official Website</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Bowen Football</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="Matches.html">Matches</a>
-            <a href="Tables.html">Tables</a>
-            <a href="player.html">Players</a>
-            <a href="register.html">Register</a>
-            <a href="admin.html">Admin logs</a>          
+
+    <header class="hero-section">
+        <nav class="main-nav">
+            <div class="logo">BOWEN FOOTBALL</div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="Tables.html" class="nav-link">Table</a></li>
+                <li><a href="news.html" class="nav-link">News</a></li>
+                <li><a href="player.html" class="nav-link">Players</a></li>
+                <li><a href="register.html" class="btn-primary">Register as player</a></li>
+            </ul>
         </nav>
-    </header>
-    <div class="container">
-        <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div class="card">
-                <h3>League Table</h3>
-                <div id="mini-table">Loading...</div>
+
+        <div class="hero-container">
+            <div class="hero-text">
+                <span class="welcome-tag">WELCOME</span>
+                <h1>BOWEN <br> FOOTBALL</h1>
+                <p>The feeling is electric as the second semester commences the best league in bowen comes alive .</p>
+                <!-- <a href="news.html" class="btn-red">Read More</a> -->
             </div>
-            <div class="card">
-                <h3>Latest Result</h3>
-                <div id="latest-match">Loading...</div>
+            
+            <div class="hero-schedule">
+                <div class="schedule-item">
+                    <p class="date">Monday, September 10, 2018</p>
+                    <h4>Football World Cup Finals</h4>
+                </div>
+                <div class="schedule-item">
+                    <p class="date">Friday, September 14, 2018</p>
+                    <h4>The Team That You Support!</h4>
+                </div>
+                <div class="schedule-item">
+                    <p class="date">Saturday, September 22, 2018</p>
+                    <h4>Why Soccer is the Best Sport</h4>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="section-padding">
+        <div class="center-text">
+            <span class="red-subtitle">RESULTS</span>
+            <h2 class="dark-title">THE LAST MATCH</h2>
+        </div>
+        <div class="results-container">
+            <div class="match-box">
+                <p class="match-date">05-01-2020 20:00</p>
+                <div class="match-score">BLB <span>1 - 3</span> FCU</div>
+                <p class="league-name">Premier League 2020</p>
+            </div>
+            <div class="match-box active-border">
+                <p class="match-date">12-01-2020 20:00</p>
+                <div class="match-score">WHU <span>1 - 1</span> FCU</div>
+                <p class="league-name">Premier League 2020</p>
+            </div>
+            <div class="match-box">
+                <p class="match-date">05-01-2020 20:59</p>
+                <div class="match-score">FCM <span>1 - 1</span> THM</div>
+                <p class="league-name">Premier League 2020</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding gray-bg">
+        <div class="center-text">
+            <span class="red-subtitle">TABLE</span>
+            <h2 class="dark-title">PREMIER LEAGUE</h2>
+        </div>
+        <div class="table-wrapper">
+            <table class="league-table">
+                <thead>
+                    <tr>
+                        <th>RANK</th>
+                        <th>TEAMS</th>
+                        <th>PLAYED</th>
+                        <th>WON</th>
+                        <th>LOST</th>
+                        <th>POINTS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>FC United</td><td>5</td><td>3</td><td>0</td><td>11</td></tr>
+                    <tr><td>2</td><td>FC Manchester</td><td>5</td><td>2</td><td>1</td><td>8</td></tr>
+                    <tr><td>3</td><td>Tottenham</td><td>5</td><td>1</td><td>2</td><td>5</td></tr>
+                </tbody>
+            </table>
+            <div class="center-text">
+                <a href="Tables.html" class="btn-red">View Full Table</a>
+            </div>
+        </div>
+    </section>
+
+    <!--<section class="news-section">
+    <div class="news-header">
+        <span class="news-subtitle">NEWS</span>
+        <h2 class="news-title">THE LATEST NEWS</h2>
+    </div>
+
+    <div class="news-grid">
+        <div class="news-sidebar">
+            <article class="news-card-small">
+                <div class="news-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=400" alt="World Cup">
+                </div>
+                <div class="news-content">
+                    <p class="news-date">August 4, 2018</p>
+                    <h3>THE WORLD CUP – WHAT TO EXPECT FROM ENGLAND</h3>
+                    <p class="news-excerpt">How the fans should react to the stunts from the favorite...</p>
+                </div>
+            </article>
+
+            <article class="news-card-small">
+                <div class="news-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=400" alt="League Report">
+                </div>
+                <div class="news-content">
+                    <p class="news-date">August 1, 2018</p>
+                    <h3>2018 LEAGUE REPORT AND HIGHLIGHTS</h3>
+                    <p class="news-excerpt">If you missed it, we give you a great recap! Follow...</p>
+                </div>
+            </article>
+        </div>
+
+        <div class="news-main">
+            <article class="news-card-large">
+                <div class="video-container">
+                    <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1200" alt="Featured Game">
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p class="news-date">October 30, 2018</p>
+                    <h3>VIDEO FOOTAGE OF THE LATEST GAME</h3>
+                </div>
+            </article>
+        </div>
+    </div>
+ </section> -->
+
+    <section class="about-section">
+        <div class="about-content">
+            <span class="red-subtitle">OUR STORY</span>
+            <h2>ABOUT THE <br> CLUB FC UNITED</h2>
+            <p>FC United has a long and exciting history that started three decades ago. It is one of the most popular football clubs that offer training programs for youth.</p>
+            <a href="news.html" class="btn-red">Read More</a>
+        </div>
+    </section>
+
+    <div class="logo-bar">
+        <img src="https://via.placeholder.com/100x50/333/fff?text=FOOTBALL" alt="Logo">
+        <img src="https://via.placeholder.com/100x50/333/fff?text=TOURNAMENT" alt="Logo">
+        <img src="https://via.placeholder.com/100x50/333/fff?text=SOCCER" alt="Logo">
+        <img src="https://via.placeholder.com/100x50/333/fff?text=CLUB" alt="Logo">
+    </div>
+<footer class="site-footer">
+    <div class="footer-signup-section">
+        <div class="footer-container">
+            <div class="footer-text-group">
+                <h2 class="signup-title">SIGN UP NOW</h2>
+                <p class="signup-desc">Become a member of our online community and get tickets to upcoming matches or sports events faster!</p>
+            </div>
+            
+            <div class="footer-form-group">
+                <form class="newsletter-form">
+                    <div class="input-wrapper">
+                        <input type="email" placeholder="Email" required>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+                <div class="privacy-check">
+                    <input type="checkbox" id="privacy" required>
+                    <label for="privacy">I've read and accept the <a href="#">Privacy Policy.</a></label>
+                </div>
             </div>
         </div>
     </div>
-    <script>
-async function loadHome() {
-    const res = await fetch('http://localhost:3000/api/data');
-    const data = await res.json();
-    
-    // Table Snapshot
-    const tableBody = document.getElementById('mini-table');
-    data.standings.slice(0, 3).forEach(s => {
-        tableBody.innerHTML += `<p>${s.pos}. ${s.team} - ${s.pts}pts</p>`;
-    });
 
-    // Latest Result
-    const m = data.matches[0];
-    document.getElementById('latest-match').innerHTML = `
-        <div class="match-row"><span>${m.home}</span> <strong>${m.score}</strong> <span>${m.away}</span></div>`;
-}
-loadHome();
-    </script>
+    <div class="footer-bottom-bar">
+        <div class="footer-container bottom-flex">
+            <p class="copyright">Stack Rosa &copy; 2026. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

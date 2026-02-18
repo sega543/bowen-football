@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOWEN FOOTBALL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #f0f2f5;
+            --bg-card: #ffffff;
+            --accent-red: #ff1744;
+            --primary-dark: #030a2e;
+            --text-main: #1a1a1a;
+            --border-color: #eee;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+
+        .dashboard {
+            width: 95vw; height: 90vh; background: var(--bg-card); border-radius: 24px;
+            display: grid; grid-template-columns: 1fr 340px; grid-template-rows: 80px 1fr;
+            overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        header { grid-column: 1 / -1; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); background: white; z-index: 10; }
+
+        .home-btn-glass { background: rgba(255, 255, 255, 0.7); border: 1px solid #000; padding: 10px 24px; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .home-btn-glass:hover { background: #333; color: white; }
+
+        .search-container input { width: 300px; padding: 10px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; }
+
+        main { padding: 40px; overflow-y: auto; background: #fff; }
+        main::-webkit-scrollbar { width: 6px; }
+        main::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
+
+        .hero { background: var(--primary-dark); color: white; padding: 60px; border-radius: 20px; margin-bottom: 30px; cursor: pointer; }
+
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
+        .news-card { cursor: pointer; transition: 0.3s; }
+        .news-card:hover { transform: translateY(-5px); }
+        .news-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; }
+
+        /* Sidebar & Fixtures */
+        .sidebar { background: #fafafa; border-left: 1px solid var(--border-color); padding: 30px 20px; overflow-y: auto; }
+        .fixture-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #eee; }
+        .fixture-header { display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-bottom: 10px; font-weight: 700; text-transform: uppercase; }
+        .fixture-row { display: flex; align-items: center; justify-content: space-between; margin: 5px 0; }
+        .team-info { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+        .score { font-weight: 800; font-size: 16px; color: var(--primary-dark); }
+        .status-badge { padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; background: #eee; color: #666; }
+
+        /* Rich Media Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); }
+        .modal-content { background: white; width: 90%; max-width: 800px; max-height: 90vh; border-radius: 25px; padding: 40px; position: relative; overflow-y: auto; }
+        .close-btn { position: absolute; top: 20px; left: 20px; background: #f0f0f0; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 18px; font-weight: bold; z-index: 1001; }
+        .modal-video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px; margin-top: 20px; background: #000; }
+        .modal-video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        .modal-content::-webkit-scrollbar { width: 5px; }
+        .modal-content::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <header>
+        <div style="font-weight: 800; font-size: 20px;">BOWEN<span style="color:var(--accent-red)">FOOTBALL</span></div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search stories..." onkeyup="searchStories()">
+        </div>
+        <button class="home-btn-glass" onclick="window.location.href='index.html'">Home</button>
+    </header>
+
+    <main id="mainContent">
+        <section class="hero" onclick="openRichModal(heroStory)">
+            <h2>Will Eden Hazard leave Chelsea?</h2>
+            <p style="margin-top:10px; opacity: 0.8;">The transfer ban might change everything.</p>
+        </section>
+        <div class="news-grid" id="newsGrid"></div>
+    </main>
+
+    <aside class="sidebar">
+        <h3 style="margin-bottom: 20px;">League Fixtures</h3>
+        <div id="fixtureContainer"></div>
+    </aside>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()">✕</button>
+        <div id="modalMedia"></div>
+        <h1 id="modalTitle" style="margin-top: 20px;">Title</h1>
+        <p id="modalBody" style="margin-top: 15px; line-height: 1.8; color: #444;"></p>
+    </div>
+</div>
+
+<script>
+    // ==========================================
+    // 1. FIXTURES DATA
+    // ==========================================
+    const fixtures = [
+        { league: "Bowen fans League", team1: "ARS", team2: "BVB", score1: "-", score2: "-", status: "mon 2nd 4:30pm" },
+        { league: "Bowen fans league", team1: "BAR", team2: "RMA", score1: "-", score2: "-", status: "tues 3rd 3:00pm" },
+        { league: "Bowen fans League", team1: "CHE", team2: "AJX", score1: "-", score2: "-", status: "wed 4th 2:30pm" },
+        { league: "Bowen fans League", team1: "ARS", team2: "BVB", score1: "-", score2: "-", status: "thurs 5th 1:00pm" },
+        { league: "Bowen fans league", team1: "BAR", team2: "RMA", score1: "-", score2: "-", status: "fri 6th 4:00pm" },
+        { league: "Bowen fans League", team1: "CHE", team2: "AJX", score1: "-", score2: "-", status: "sat 7th 10:00am" },
+        { league: "Bowen fans League", team1: "ARS", team2: "BVB", score1: "-", score2: "-", status: "wed 8th 2:00pm" },
+        { league: "Bowen fans League", team1: "BAR", team2: "RMA", score1: "-", score2: "-", status: "mon 9th 4:30pm" },
+        { league: "Bowen fans League", team1: "CHE", team2: "AJX", score1: "-", score2: "-", status: "tues 10th 3:00pm" },
+        { league: "Bowen fans League", team1: "ARS", team2: "BVB", score1: "-", score2: "-", status: "wed 11th 2:00pm" },
+        { league: "Bowen fans League", team1: "BAR", team2: "RMA", score1: "-", score2: "-", status: "thurs 12th 4:30pm" },
+        { league: "Bowen fans League", team1: "CHE", team2: "AJX", score1: "-", score2: "-", status: "fri 13th 3:00pm" },
+        { league: "Bowen fans League", team1: "JUV", team2: "MIL", score1: "-", score2: "-", status: "sat 14th 10:00am" }
+    ];
+
+    function renderFixtures() {
+        const container = document.getElementById('fixtureContainer');
+        container.innerHTML = '';
+        fixtures.forEach(match => {
+            const card = document.createElement('div');
+            card.className = 'fixture-card';
+            card.innerHTML = `
+                <div class="fixture-header">
+                    <span>${match.league}</span>
+                    <span class="status-badge">${match.status}</span>
+                </div>
+                <div class="fixture-row"><div class="team-info"><span>${match.team1}</span></div><div class="score">${match.score1}</div></div>
+                <div class="fixture-row"><div class="team-info"><span>${match.team2}</span></div><div class="score">${match.score2}</div></div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // ==========================================
+    // 2. ENGAGING STORIES DATA (With Videos)
+    // ==========================================
+    const heroStory = { 
+        title: "The Hazard Transfer Saga", 
+        videoUrl: "https://www.youtube.com/embed/P_6vV_E80N8", // Replace with real highlight link
+        fullContent: "The Belgian star's move to Madrid is the talk of the town. With Chelsea's transfer ban looming, the stakes have never been higher for the Blues' front office." 
+    };
+
+    const stories = [
+        { 
+            title: "2024 Penalty Shootout Highlights", 
+            desc: "Relive the legendary Bowen vs United finals.",
+            thumbnail: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500",
+            videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Replace with your actual match video
+            fullContent: "It was a cold night at the stadium, but the action was hot. Relive every save and every goal that defined our championship run last year."
+        },
+        { 
+            title: "Insane Dribbling Skills 2024", 
+            desc: "The best skill moves from our midfield maestros.",
+            thumbnail: "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=500",
+            videoUrl: "https://www.youtube.com/embed/9iaasR1zS68", 
+            fullContent: "Our students showed elite footwork last season. This compilation features the top 10 moments where defenders were left in the dust."
+        },
+        { 
+            title: "Mbappé's Record Night", 
+            desc: "A new milestone reached in Ligue 1.",
+            thumbnail: "https://images.unsplash.com/photo-1543351611-58f69d7c1781?w=500",
+            videoUrl: "https://www.youtube.com/embed/L_fG98lFjIs",
+            fullContent: "Kylian Mbappé continues to rewrite history books. Watch his hat-trick that secured the record for most goals in a single season."
+        }
+    ];
+
+    function renderStories() {
+        const newsGrid = document.getElementById('newsGrid');
+        newsGrid.innerHTML = '';
+        stories.forEach((s) => {
+            const card = document.createElement('div');
+            card.className = 'news-card';
+            card.innerHTML = `
+                <img src="${s.thumbnail}" alt="News">
+                <h3 class="story-title">${s.title}</h3>
+                <p style="font-size:12px; color:#777;">${s.desc}</p>
+            `;
+            card.onclick = () => openRichModal(s);
+            newsGrid.appendChild(card);
+        });
+    }
+
+    // ==========================================
+    // 3. RICH MEDIA MODAL LOGIC
+    // ==========================================
+    const overlay = document.getElementById('modalOverlay');
+    
+    function openRichModal(story) {
+        document.getElementById('modalTitle').innerText = story.title;
+        document.getElementById('modalBody').innerText = story.fullContent;
+        
+        const mediaContainer = document.getElementById('modalMedia');
+        if (story.videoUrl) {
+            mediaContainer.innerHTML = `
+                <div class="modal-video-container">
+                    <iframe src="${story.videoUrl}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>`;
+        } else {
+            mediaContainer.innerHTML = '';
+        }
+        
+        overlay.style.display = 'flex';
+    }
+
+    function closeModal() {
+        overlay.style.display = 'none';
+        document.getElementById('modalMedia').innerHTML = ''; // Stop video on close
+    }
+
+    // Initial Load
+    renderFixtures();
+    renderStories();
+
+    function searchStories() {
+        let input = document.getElementById('searchInput').value.toLowerCase();
+        let cards = document.getElementsByClassName('news-card');
+        for (let i = 0; i < cards.length; i++) {
+            let title = cards[i].querySelector('.story-title').innerText.toLowerCase();
+            cards[i].style.display = title.includes(input) ? "" : "none";
+        }
+    }
+    
+    window.onclick = (e) => { if(e.target == overlay) closeModal(); }
+</script>
+
+</body>
+</html>

@@ -2,43 +2,169 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Fixtures & Results - Bowen Fans League</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixtures & Results | Bowen Football</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
-    <header>
-        <h1>Bowen Football</h1>
+
+    <header class="main-nav">
+        <div class="logo">BOWEN <span class="fc">FC</span></div>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="Tables.html">Tables</a>
-            <a href="player.html">Players</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Matches.html" class="active">Matches</a></li>
+                <li><a href="Tables.html">Tables</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="player.html">Players</a></li>
+            </ul>
         </nav>
+        <div class="nav-auth">
+            <a href="register.html" class="btn-primary">Join Club</a>
+        </div>
     </header>
 
-    <div class="container">
-        <h2 class="page-title">Fixtures & Results</h2>
-        
-        <div id="match-schedule"></div>
-    </div>
+    <main class="content-container">
+        <section class="page-header">
+            <h1>Fixtures & Results</h1>
+            <p>Stay up to date with Bowen FC's journey through the season.</p>
+        </section>
 
-    <script src="index.js"></script>
+        <section class="match-list-section">
+            <div class="list-header">
+                <h2>Recent Results</h2>
+            </div>
+            
+            <div class="match-row result">
+                <div class="match-date">Sun 15 Feb</div>
+                <div class="match-teams">
+                    <div class="team-home">
+                        <span>Bowen FC</span>
+                        <img src="https://via.placeholder.com/30" alt="Bowen FC">
+                    </div>
+                    <div class="score-box">3 - 1</div>
+                    <div class="team-away">
+                        <img src="https://via.placeholder.com/30" alt="Opposition">
+                        <span>Coastal United</span>
+                    </div>
+                </div>
+                <div class="match-venue">Bowen Stadium</div>
+            </div>
 
-    <script>
-async function loadMatches() {
-    const res = await fetch('http://localhost:3000/api/data');
-    const data = await res.json();
-    const container = document.getElementById('match-schedule');
-    
-    data.matches.forEach(m => {
-        container.innerHTML += `
-            <div class="match-row">
-                <div class="team-home">${m.home}</div>
-                <div class="score-box">${m.score}</div>
-                <div class="team-away">${m.away}</div>
-            </div>`;
-    });
-}
-loadMatches();
-    </script>
+            <div class="match-row result">
+                <div class="match-date">Sat 08 Feb</div>
+                <div class="match-teams">
+                    <div class="team-home">
+                        <span>City Blues</span>
+                        <img src="https://via.placeholder.com/30" alt="Opposition">
+                    </div>
+                    <div class="score-box">0 - 2</div>
+                    <div class="team-away">
+                        <img src="https://via.placeholder.com/30" alt="Bowen FC">
+                        <span>Bowen FC</span>
+                    </div>
+                </div>
+                <div class="match-venue">City Ground</div>
+            </div>
+        </section>
+
+        <section class="match-list-section">
+            <div class="list-header">
+                <h2>Upcoming Fixtures</h2>
+            </div>
+
+            <div class="match-row fixture">
+                <div class="match-date">Sat 22 Feb</div>
+                <div class="match-teams">
+                    <div class="team-home">
+                        <span>Bowen FC</span>
+                        <img src="https://via.placeholder.com/30" alt="Bowen FC">
+                    </div>
+                    <div class="score-box">15:00</div>
+                    <div class="team-away">
+                        <img src="https://via.placeholder.com/30" alt="Opposition">
+                        <span>Metro Rovers</span>
+                    </div>
+                </div>
+                <div class="match-venue">Bowen Stadium</div>
+            </div>
+        </section>
+    </main>
+
+    <style>
+        .content-container {
+            padding: 2rem 5%;
+        }
+        .page-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1rem;
+        }
+        .match-list-section {
+            margin-bottom: 4rem;
+        }
+        .list-header {
+            background: #f8f8f8;
+            padding: 10px 20px;
+            margin-bottom: 1rem;
+            border-left: 4px solid AccentColor;
+        }
+        .match-row {
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr;
+            align-items: center;
+            padding: 1.5rem;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
+        }
+        .match-row:hover {
+            background: #fafafa;
+        }
+        .match-date {
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .match-teams {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+        }
+        .team-home, .team-away {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 150px;
+        }
+        .team-home { justify-content: flex-end; }
+        .score-box {
+            background: #333;
+            color: #fff;
+            padding: 5px 15px;
+            font-weight: 900;
+            border-radius: 4px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .match-venue {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        @media (max-width: 768px) {
+            .match-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                text-align: center;
+            }
+            .match-teams { gap: 1rem; }
+            .match-venue { text-align: center; }
+            .team-home, .team-away { width: auto; }
+        }
+    </style>
+
 </body>
 </html>
