@@ -2,26 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Registration | Bowen Football</title>
+    <title>Register | Bowen Football</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body { background: #0a1118; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .glass-form {
-            max-width: 400px; width: 90%; padding: 2rem;
-            background: rgba(255, 255, 255, 0.05); border-radius: 12px;
-            backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 400px; width: 90%; padding: 2rem; background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex; flex-direction: column; gap: 1.5rem; color: white;
         }
-        .glass-form h2 { text-align: center; margin: 0; font-family: sans-serif; }
-        .glass-form input, .glass-form select {
-            padding: 0.75rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255, 255, 255, 0.9);
-        }
-        .glass-form button {
-            padding: 1rem; border: none; border-radius: 8px;
-            background-color: #ff1e1e; color: white; font-weight: bold; cursor: pointer;
-        }
-        .glass-form button:hover { background-color: #cc1818; }
+        input, select { padding: 0.75rem; border-radius: 8px; border: none; background: white; }
+        button { padding: 1rem; border: none; border-radius: 8px; background: #ff1e1e; color: white; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -29,14 +20,14 @@
 <div class="glass-form">
     <h2>Player Registration</h2>
     <input type="text" placeholder="Full Name" id="pName">
-    <input type="text" placeholder="Department/College" id="pDept">
+    <input type="text" placeholder="Department" id="pDept">
     <select id="pPos">
-        <option value="GK">Goalkeeper (GK)</option>
-        <option value="DEF">Defender (DEF)</option>
-        <option value="MID">Midfielder (MID)</option>
-        <option value="ST">Striker (ST)</option>
+        <option value="GK">GK</option>
+        <option value="DEF">DEF</option>
+        <option value="MID">MID</option>
+        <option value="ST">ST</option>
     </select>
-    <button onclick="submitPlayer()">Submit for Rating</button>
+    <button onclick="submitPlayer()">Register Now</button>
 </div>
 
 <script>
@@ -45,35 +36,23 @@
         const dept = document.getElementById('pDept').value;
         const pos = document.getElementById('pPos').value;
 
-        if (!name || !dept) {
-            alert('Please fill in all fields');
-            return;
-        }
+        if (!name || !dept) { alert('Fill everything, boss!'); return; }
 
-        // REPLACE THIS URL WITH YOUR SHEETDB API URL
         const apiURL = 'https://sheetdb.io/api/v1/w2udchrb7xrnh';
 
         try {
             const response = await fetch(apiURL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    data: [{ "Name": name, "Department": dept, "Position": pos }]
-                })
+                body: JSON.stringify({ data: [{ "Name": name, "Department": dept, "Position": pos }] })
             });
 
             if (response.ok) {
-                alert(`Success! ${name} is registered for scouting.`);
-                document.getElementById('pName').value = '';
-                document.getElementById('pDept').value = '';
-            } else {
-                alert("Error sending data. Check your API URL.");
+                alert("Registration sent! Admin will rate you soon.");
+                location.reload();
             }
-        } catch (error) {
-            alert("Connection error. Is your API URL correct?");
-        }
+        } catch (error) { alert("Check your internet connection."); }
     }
 </script>
-
 </body>
 </html>
