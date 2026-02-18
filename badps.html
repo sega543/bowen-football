@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Bowen Football</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { background: #0a1118; color: white; font-family: sans-serif; padding: 20px; }
+        .admin-panel { max-width: 900px; margin: auto; background: #141d26; padding: 30px; border-radius: 12px; }
+        .input-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        input, select { padding: 10px; background: #1c2732; border: 1px solid #2d3844; color: white; border-radius: 5px; }
+        button { padding: 10px; background: #ff1e1e; color: white; border: none; cursor: pointer; font-weight: bold; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #2d3844; }
+        textarea { width: 100%; height: 150px; background: #000; color: #00ff88; padding: 10px; font-family: monospace; margin-top: 15px; border: none; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div id="adminContent" class="hidden">
+    <div class="admin-panel">
+        <h1>Admin Control Center</h1>
+        
+        <h2>League Table Update</h2>
+        <div class="input-row">
+            <select id="selectLeague">
+                <option value="Freshers">Freshers Cup</option>
+                <option value="VC">VC Cup</option>
+                <option value="Hostel">Hostel Cup</option>
+                <option value="College">College Cup</option>
+                <option value="Fans">Bowen Fans League</option>
+            </select>
+            <input type="text" id="teamName" placeholder="Team Name">
+            <input type="number" id="win" placeholder="W">
+            <input type="number" id="draw" placeholder="D">
+            <input type="number" id="loss" placeholder="L">
+            <button onclick="alert('Table Update Logic Required')">Update Table</button>
+        </div>
+
+        <hr style="opacity: 0.1; margin: 30px 0;">
+
+        <h2>Player Rating Approvals</h2>
+        <button onclick="fetchCloudData()">Refresh Cloud Data</button>
+        <div id="pendingPlayers">Loading...</div>
+
+        <h3>Generated JS Code</h3>
+        <p style="font-size: 12px; color: #8a9199;">Copy this and paste it into your index.js file:</p>
+        <textarea id="jsOutput" readonly placeholder="The code for index.js will appear here..."></textarea>
+    </div>
+</div>
+
+<script>
+    // 1. PASSWORD GATE
+    (function() {
+        const pass = prompt("Enter Admin Password:");
+        if (pass === "Bowen2026") { // Change this to your preferred password
+            document.getElementById('adminContent').classList.remove('hidden');
+            fetchCloudData();
+        } else {
+            alert("Access Denied");
+            window.location.href = "index.html";
+        }
+    })();
+
+    // 2. FETCH DATA FROM GOOGLE SHEETS
+    async function fetchCloudData() {
+        const apiURL = 'https://sheetdb.io/api/v1/w2udchrb7xrnh';
+        const container = document.getElementById('pendingPlayers');
+        const codeBox = document.getElementById('jsOutput');
+
+        try {
+            const response = await fetch(apiURL);
+            const data = await response.json();
+            
+            if (data.length === 0) {
+                container.innerHTML = "<p>No new players found.</p>";
+                return;
+            }
+
+            let html = '<table><tr><th>Name</th><th>Dept</th><th>Position</th></tr>';
+            let code = "";
+            const posMap = { 'GK': 'KEEPERS', 'DEF': 'DEFENDERS', 'MID': 'MIDFIELDERS', 'ST': 'STRIKERS' };
+
+            data.forEach(p => {
+                html += `<tr><td>${p.Name}</td><td>${p.Department}</td><td>${p.Position}</td></tr>`;
+                const cat = posMap[p.Position] || 'STRIKERS';
+                code += `addNewPlayer("${p.Name}", 0, 0, 0, 0, "${p.Department}", "${cat}");\n`;
+            });
+
+            html += '</table>';
+            container.innerHTML = html;
+            codeBox.value = code;
+        } catch (e) {
+            container.innerHTML = "Error connecting to SheetDB.";
+        }
+    }
+</script>
+
+</body>
+</html>
