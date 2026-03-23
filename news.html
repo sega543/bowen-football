@@ -75,8 +75,9 @@
 
     <main id="mainContent">
         <section class="hero" onclick="openRichModal(heroStory)">
-            <h2>Will Eden Hazard leave Chelsea?</h2>
-            <p style="margin-top:10px; opacity: 0.8;">The transfer ban might change everything.</p>
+            <h2>THE GAFFER HAS JUST RELEASED HIS BEST ELEVEN</h2>
+            <p style="margin-top:10px; opacity: 0.8;">"Some stepped up. Others disappeared. These are the ones who left it all on the field.
+" says the GAFFER </p>
         </section>
         <div class="news-grid" id="newsGrid"></div>
     </main>
@@ -101,20 +102,12 @@
     // 1. FIXTURES DATA
     // ==========================================
     const fixtures = [
-        { league: "Bowen fans League", team1: "ARS", team2: "BVB", score1: "-", score2: "-", status: "mon 2nd 4:30pm" },
-        { league: "Bowen fans league", team1: "BAR", team2: "RMA", score1: "-", score2: "-", status: "tues 3rd 3:00pm" },
-        { league: "Bowen fans League", team1: "CHE", team2: "AJX", score1: "-", score2: "-", status: "wed 4th 2:30pm" },
-        { league: "Bowen fans League", team1: "ARS", team2: "BVB", score1: "-", score2: "-", status: "thurs 5th 1:00pm" },
-        { league: "Bowen fans league", team1: "BAR", team2: "RMA", score1: "-", score2: "-", status: "fri 6th 4:00pm" },
-        { league: "Bowen fans League", team1: "CHE", team2: "AJX", score1: "-", score2: "-", status: "sat 7th 10:00am" },
-        { league: "Bowen fans League", team1: "ARS", team2: "BVB", score1: "-", score2: "-", status: "wed 8th 2:00pm" },
-        { league: "Bowen fans League", team1: "BAR", team2: "RMA", score1: "-", score2: "-", status: "mon 9th 4:30pm" },
-        { league: "Bowen fans League", team1: "CHE", team2: "AJX", score1: "-", score2: "-", status: "tues 10th 3:00pm" },
-        { league: "Bowen fans League", team1: "ARS", team2: "BVB", score1: "-", score2: "-", status: "wed 11th 2:00pm" },
-        { league: "Bowen fans League", team1: "BAR", team2: "RMA", score1: "-", score2: "-", status: "thurs 12th 4:30pm" },
-        { league: "Bowen fans League", team1: "CHE", team2: "AJX", score1: "-", score2: "-", status: "fri 13th 3:00pm" },
-        { league: "Bowen fans League", team1: "JUV", team2: "MIL", score1: "-", score2: "-", status: "sat 14th 10:00am" }
-    ];
+        { league: "College Cup", team1: "COHES", team2: "COLAW", score1: "-", score2: "-", status: "Wed 25th mar 2026 3:30pm" },
+        { league: "College Cup", team1: "COCCS", team2: "COLAW", score1: "-", score2: "-", status: "Wed 25th mar 2026 4:30pm" },
+        { league: "College Cup", team1: "COEVS", team2: "COAES", score1: "-", score2: "-", status: "Fri 27th mar 2026 3:30pm" },
+        { league: "College Cup", team1: "COLAW", team2: "COLBS", score1: "-", score2: "-", status: "Mon 30th mar 2026 4:30pm" },
+        { league: "College Cup", team1: "COHES", team2: "COCCS", score1: "-", score2: "-", status: "Mon 30th mar 2026 4:30pm" },
+];
 
     function renderFixtures() {
         const container = document.getElementById('fixtureContainer');
@@ -137,12 +130,18 @@
     // ==========================================
     // 2. ENGAGING STORIES DATA (With Videos)
     // ==========================================
-    const heroStory = { 
-        title: "The Hazard Transfer Saga", 
-        videoUrl: "https://www.youtube.com/embed/P_6vV_E80N8", // Replace with real highlight link
-        fullContent: "The Belgian star's move to Madrid is the talk of the town. With Chelsea's transfer ban looming, the stakes have never been higher for the Blues' front office." 
-    };
+  const heroStory = { 
+    title: "🏆 The Gaffer’s Verdict: Bowen College Cup Team of the Week Some stepped up. Others disappeared, These are the ones who left it all on the field.", 
+    videoUrl: "https://www.youtube.com/embed/P_6vV_E80N8", 
+    fullContent: `🛡️ The Iron Wall (Defense)
+The backline this week was virtually impenetrable. Kola (COHES) anchored the defense from between the sticks, while the defensive quartet of Jerry (COCCS), AJ (COLAW), Iyanu (COAES), and Viki-Posh (COAES) shut down some of the most dangerous attackers in the league. If you were looking for a way through, you weren't finding it here. 
 
+⚙️ The Engine Room (Midfield) 
+Control of the game was won in the middle. Arould (COHES) and Mesoma (COAES) provided the width and pace, while the central trio of Bastoni (COAES), Issahcar (COCCS), and Ifeanyi (COSMS) dictated the tempo like seasoned pros. Their vision turned defense into clinical counter-attacks in seconds.
+
+🎯 The Clinical Edge (Attack) 
+Leading the line and striking fear into opponents was Feranmi (COSMS). With the weight of his team on his shoulders, Feranmi delivered the kind of performance that legends are made of.`
+};
     const stories = [
         { 
             title: "2024 Penalty Shootout Highlights", 
